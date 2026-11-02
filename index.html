@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="theme-color" content="#21122f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Rianne's Cube Time">
   <meta name="application-name" content="Rianne's Cube Time">
   <meta name="description" content="Rianne's personal Rubik's Cube solve timer, best times, and progress tracker.">
-  <meta name="app-version" content="1.0.2">
-  <title>Rianne's Rubik Cube Time · v1.0.2</title>
+  <meta name="app-version" content="1.0.3">
+  <title>Rianne's Rubik Cube Time · v1.0.3</title>
   <style>
     :root{color-scheme:dark;--bg:#080d1b;--surface:#111a2f;--surface2:#16213b;--border:#293653;--text:#f2f6ff;--muted:#9aa8c6;--mint:#65f7bf;--purple:#aa8afa;--amber:#ffd176;--red:#ff8a9b;--shadow:0 22px 80px rgba(0,0,0,.22);--radius:24px}
     *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}body{margin:0;min-width:320px;background:radial-gradient(circle at 7% -10%,#24365b 0,transparent 29%),radial-gradient(circle at 91% 3%,#27204d 0,transparent 24%),var(--bg);color:var(--text);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;line-height:1.45;min-height:100vh}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--mint)}:focus-visible{outline:3px solid var(--mint);outline-offset:3px}::selection{background:#459d89;color:#fff}
@@ -32,7 +32,7 @@
     @media(max-width:365px){.timer-numbers{font-size:42px}.timer-card{padding:15px}.history-detail{max-width:175px}.page-heading .btn{padding:8px 10px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
     /* v1.0.1 — Stackmat-inspired two-finger touch practice, including iPhone Safari viewport mode. */
-    /* v1.0.2 — Offline-ready GitHub Pages app shell. */
+    /* v1.0.3 — Offline-ready GitHub Pages app shell. */
     .offline-strip{display:flex;align-items:center;gap:9px;width:max-content;max-width:100%;margin:4px 0 14px;padding:7px 12px;color:#d6e8f3;font-size:11px;font-weight:750;border:1px solid #33485b;background:#12253a;border-radius:999px}
     .offline-light{flex:none;width:8px;height:8px;border-radius:50%;background:#ffd176;box-shadow:0 0 9px #ffd17688}.offline-strip.ready .offline-light{background:var(--mint);box-shadow:0 0 10px #65f7bf99}.offline-strip.offline .offline-light{background:#a8b4ff;box-shadow:0 0 10px #a8b4ff99}
     .offline-info{font-size:12px;border:1px solid #3a4e68;border-radius:12px;padding:11px 12px;background:#11243a;color:#c5d9e8;margin:8px 0 4px;line-height:1.6}
@@ -40,6 +40,127 @@
     .timer-top-actions{display:flex;align-items:center;gap:9px}.expand-btn{flex:none;width:40px;height:40px}.timer-card{min-height:565px}.timer-pad{min-height:370px;padding:42px 3px 28px;touch-action:none;-webkit-touch-callout:none;overscroll-behavior:contain;cursor:default}.timer-pad *{pointer-events:none}.timer-pad.is-ready{background:rgba(101,247,191,.085);box-shadow:inset 0 0 0 1px rgba(101,247,191,.28)}.timer-numbers{font-size:clamp(56px,8.7vw,112px)}.timer-hint{font-size:13px;max-width:420px}.finger-guide-row{display:flex;align-items:center;justify-content:space-around;gap:12px;width:min(100%,460px);margin-top:27px}.finger-guide{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;font-weight:840;color:#a7b8d5;transition:color .1s}.finger-ring{display:block;height:42px;width:88px;border-radius:999px;border:2px solid #52698b;background:rgba(37,60,89,.24);box-shadow:inset 0 1px 15px rgba(255,255,255,.035);transition:all .12s}.timer-pad.is-pressed .finger-ring{border-color:var(--amber);background:rgba(255,209,118,.13)}.timer-pad.is-ready .finger-ring{border-color:var(--mint);background:rgba(101,247,191,.16);box-shadow:0 0 22px rgba(101,247,191,.2)}.timer-pad.is-running .finger-guide{color:#7c95b7}.timer-pad.is-running .finger-ring{border-color:#3c516f;background:rgba(15,30,52,.28)}
     .focus-overlay{display:none;position:fixed;z-index:125;inset:0;width:100%;height:100vh;height:100dvh;min-height:0;flex-direction:column;overflow:hidden;padding:calc(12px + env(safe-area-inset-top)) max(15px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(15px,env(safe-area-inset-left));background:radial-gradient(circle at 15% 12%,#1b3b50,transparent 36%),radial-gradient(circle at 90% 89%,#292147,transparent 40%),#080d1b}.focus-overlay.open{display:flex}body.timer-focus-mode{overflow:hidden;touch-action:pan-x pan-y}.focus-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px}.focus-brand{font-size:clamp(10px,1.8vw,15px);font-weight:850;letter-spacing:1.5px;display:flex;gap:8px;align-items:center;color:#bfd0ef}.focus-cube{font-size:25px;color:var(--mint)}.focus-close{padding:9px 13px;min-height:39px;white-space:nowrap}.focus-mount{display:flex;flex:1;min-height:0;align-items:stretch;justify-content:center;margin:8px 0}.focus-overlay .timer-pad{height:100%;min-height:0;width:100%;flex:1;margin:0;padding:12px 4px;display:flex;gap:0;justify-content:space-evenly}.focus-overlay .timer-numbers{font-size:clamp(65px,19.5vw,205px);line-height:1.03}.focus-overlay .timer-pad .tap-indicator{font-size:clamp(11px,2.5vw,17px);margin:0}.focus-overlay .timer-hint{font-size:clamp(13px,2.6vw,18px);max-width:650px;margin:0}.focus-overlay .finger-guide-row{width:min(100%,570px);margin:5px auto 0}.focus-overlay .finger-ring{width:clamp(82px,20vw,158px);height:clamp(48px,8vh,95px)}.focus-overlay .finger-guide{font-size:clamp(9px,1.4vw,12px)}.focus-bottom{flex:none;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:11px;color:var(--muted)}.focus-bottom strong{color:var(--mint)}.focus-bottom kbd{font-family:inherit;border:1px solid #3d4d67;border-radius:5px;padding:2px 4px}
     @media(max-width:700px){.timer-card{min-height:520px}.timer-pad{min-height:365px;padding:37px 0 24px}.timer-numbers{font-size:clamp(53px,15.4vw,91px)}.timer-pad .tap-indicator{margin-bottom:15px}.finger-guide-row{margin-top:25px}.focus-overlay .timer-numbers{font-size:clamp(65px,19.5vw,205px)}.focus-bottom{flex-direction:column;gap:3px;align-items:center;font-size:10px;text-align:center}.focus-brand{letter-spacing:1px}.focus-overlay .timer-pad{padding:6px 0}.focus-overlay .finger-guide-row{margin-top:0}}@media(max-width:365px){.timer-numbers{font-size:53px}.focus-overlay .timer-numbers{font-size:65px}.focus-close span{display:none}.focus-overlay .finger-ring{width:78px}}@media(orientation:landscape) and (max-height:530px){.focus-overlay{padding-top:6px;padding-bottom:6px}.focus-overlay .timer-pad{flex-direction:row;flex-wrap:wrap;justify-content:center;align-content:center;column-gap:15px;row-gap:2px}.focus-overlay .timer-pad .tap-indicator{width:100%;text-align:center;font-size:11px}.focus-overlay .timer-numbers{font-size:clamp(56px,13vh,100px)}.focus-overlay .timer-hint{width:100%;margin:0;font-size:12px}.focus-overlay .finger-guide-row{margin:0;width:35%;max-width:350px}.focus-overlay .finger-ring{height:30px;width:68px}.focus-overlay .finger-guide{font-size:8px}.focus-overlay .focus-bottom{display:none}}
+
+    /* v1.0.3 — Rianne's lavender + blush "starlight" theme; persistent safe-area sticky header. */
+    :root{
+      --bg:#120d26;--surface:#231936;--surface2:#332346;--border:#56416d;
+      --text:#fff7ff;--muted:#c7b8d9;--mint:#7ff2c9;--purple:#d4b8ff;
+      --pink:#ffa8de;--pink-strong:#ff8bce;--amber:#ffe2a4;--red:#ff9db7;
+      --shadow:0 22px 75px rgba(12,3,31,.28)
+    }
+    body{
+      background:radial-gradient(ellipse at 14% -5%,rgba(248,139,218,.23) 0%,transparent 43%),
+                 radial-gradient(ellipse at 95% 15%,rgba(145,113,242,.23) 0%,transparent 42%),
+                 linear-gradient(165deg,#241431 0%,#130e2b 50%,#1d1134 100%);
+      background-attachment:fixed;
+    }
+    ::selection{background:#ff9cdd;color:#281136}
+    a,.eyebrow,.btn.textual,.stat-box .value.mint{color:var(--pink)}
+    :focus-visible{outline-color:var(--pink)}
+
+    /* Sticky across every section and all scroll positions; leave room for iPhone Dynamic Island. */
+    .app-header{
+      position:sticky;top:0;z-index:90;isolation:isolate;
+      padding-top:calc(15px + env(safe-area-inset-top,0px));padding-bottom:15px;
+    }
+    .app-header::before{
+      content:"";position:absolute;top:0;bottom:0;left:50%;width:100vw;
+      transform:translateX(-50%);z-index:-1;pointer-events:none;
+      background:linear-gradient(100deg,rgba(38,20,58,.97),rgba(28,18,55,.95) 65%,rgba(45,22,60,.96));
+      border-bottom:1px solid rgba(255,178,236,.20);
+      box-shadow:0 10px 32px rgba(11,6,30,.26);
+      -webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
+    }
+    .brand-name{color:#fff4ff;text-shadow:0 1px 10px rgba(255,147,228,.08)}
+    .brand-caption{color:#e7bbef;letter-spacing:1.65px}
+    .brand-symbol{
+      border-color:#a677bc;background:linear-gradient(135deg,#51305e,#2a2655);
+      box-shadow:0 0 24px rgba(242,132,215,.14);transform:rotate(-9deg);
+    }
+    .brand-symbol i{background:#ffa5db}
+    .brand-symbol i:nth-child(2n){background:#c5b3ff}
+    .brand-symbol i:nth-child(5){background:#ffe6a5}
+    .brand-symbol i:nth-child(3n){background:#91f3d4}
+    .desktop-nav{background:rgba(60,37,82,.68);border-color:#745188}
+    .nav-link{color:#cbbbde}
+    .nav-link.active{background:linear-gradient(135deg,#ffacd9,#dfb8ff);color:#33213a;box-shadow:0 3px 14px rgba(244,117,206,.18)}
+
+    .card{background:linear-gradient(152deg,rgba(49,32,70,.95),rgba(29,21,54,.97));border-color:#654b7b}
+    .timer-card{
+      background:radial-gradient(ellipse at 85% 10%,rgba(244,144,210,.21),transparent 49%),
+                 radial-gradient(ellipse at 2% 95%,rgba(165,123,244,.16),transparent 41%),
+                 linear-gradient(148deg,#34244c,#211b3c 85%);
+      border-color:#805789;
+    }
+    .timer-card::before{border-color:rgba(255,184,237,.18);box-shadow:0 0 0 54px rgba(247,174,227,.025),0 0 0 108px rgba(195,159,249,.027)}
+    .timer-card::after{content:"✦";position:absolute;right:33px;bottom:101px;color:rgba(255,176,222,.22);font-size:23px;pointer-events:none}
+    .timer-title{color:#fff2ff}
+    .pill{background:rgba(63,42,87,.62);border-color:#7b608e;color:#ead5f0}
+    .pill .dot{background:#8bf9cf;box-shadow:0 0 12px rgba(139,249,207,.55)}
+    .pill.running .dot{background:var(--amber)}
+    .timer-pad.is-ready{background:rgba(125,255,207,.08);border-color:rgba(125,255,207,.48);box-shadow:inset 0 0 0 1px rgba(125,255,207,.23)}
+    .timer-pad.is-ready .timer-numbers{color:#90ffd4}
+    .timer-pad.is-running .timer-numbers{color:#ffd7f1;text-shadow:0 0 42px rgba(255,174,225,.17)}
+    .timer-pad.is-inspection .timer-numbers{color:#d8c0ff}
+    .timer-pad.is-ready .finger-ring{border-color:#90ffd4;background:rgba(144,255,212,.14);box-shadow:0 0 23px rgba(144,255,212,.18)}
+    .timer-pad.is-running .finger-ring{background:rgba(40,25,61,.25);border-color:#69517e}
+    .timer-pad.is-running .finger-guide{color:#a98fb9}
+    .finger-guide{color:#dfcee8}
+    .finger-ring{border-color:#8e76a6;background:rgba(116,77,150,.12)}
+    .timer-foot{border-top-color:rgba(246,196,234,.18)}
+    .icon-btn{background:#402b58;border-color:#795a91;color:#fff2ff}
+    .icon-btn:hover{background:#54376b}
+    .btn{background:#48325b;border-color:#795b91;color:#fff5ff}
+    .btn:hover{background:#59406c}
+    .btn.primary{background:linear-gradient(110deg,#ff9bd4,#efb5ff);color:#351b39;border-color:#ffb7e4}
+    .btn.primary:hover{background:linear-gradient(110deg,#ffc0e8,#f0d0ff)}
+    .btn.danger{background:#5a324e;border-color:#af6386;color:#ffe3ef}
+    .select,.field{background:#302342;border-color:#755989;color:#fff6ff}
+    .select:focus,.field:focus{border-color:var(--pink)}
+    .stat-box{background:#2c2041;border-color:#6d547f}
+    .stat-box .value.purple{color:#dec6ff}
+    .quick-icon{background:#55365f}
+    .insight{border-color:#614e74}
+    .day-bar-track{background:#402e59}
+    .day-bar{background:linear-gradient(180deg,#ff9fda,#a38cff)}
+    .history-item{background:#2c2043;border-color:#654c7b}
+    .history-rank{background:#4d345f;color:#ead5ff}
+    .history-item.best .history-rank{background:#6a3a6b;color:#ffd5eb}
+    .tag{background:#563a6b;color:#ffe3fa}
+    .empty-state{border-color:#785a8e}
+    .setting-row{border-bottom-color:#5c4470}
+    .switch{background:#654b73;border-color:#9a7bad}
+    .switch:checked{background:#ef90d4;border-color:#ef90d4}
+    .notice{background:#392747;border-color:#755485;color:#efdaff}
+    .modal-card{background:#291e3b;border-color:#8f6a9a}
+    .form-group label{color:#edd6fa}
+    .offline-strip{background:rgba(57,37,79,.85);border-color:#805c95;color:#f4dbff}
+    .offline-strip.ready .offline-light{background:#85ffcf;box-shadow:0 0 10px rgba(133,255,207,.55)}
+    .offline-info{background:#342747;border-color:#806391;color:#e8d5f4}
+    .app-footer b{color:#f6d6f1}
+    .focus-overlay{background:radial-gradient(ellipse at 13% 10%,#59345c,transparent 38%),radial-gradient(ellipse at 90% 95%,#403164,transparent 42%),#1b142e}
+    .focus-brand{color:#f9dcf6}
+    .focus-cube,.focus-bottom strong{color:var(--pink)}
+    .focus-bottom kbd{border-color:#806094}
+    .toast{background:#ffe7f5;color:#4d2045}
+    @media(max-width:700px){
+      .app-header{padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:12px;gap:8px}
+      .brand{gap:10px}
+      .brand-name{font-size:clamp(14px,4.0vw,17px);line-height:1.17;letter-spacing:-.46px;white-space:normal;overflow:visible;text-overflow:clip;max-width:265px}
+      .brand-caption{font-size:9px;letter-spacing:1.05px;margin-top:4px;white-space:normal}
+      .brand-symbol{padding:9px}
+      .mobile-nav{background:rgba(32,19,50,.97);border-top-color:#68477f}
+      .mobile-nav .nav-link.active{background:linear-gradient(130deg,#ffaddc,#dcbdff);color:#34183e}
+      .timer-card::after{bottom:96px;right:22px}
+      .timer-numbers{letter-spacing:-.07em}
+    }
+    /* iPhone Home Screen mode: notch spacing persists when browser controls are hidden. */
+    @media(display-mode:standalone){
+      .app-header{padding-top:calc(12px + env(safe-area-inset-top,0px))}
+    }
+    @media(prefers-reduced-transparency:reduce){
+      .app-header::before{background:#26183d;-webkit-backdrop-filter:none;backdrop-filter:none}
+    }
   </style>
 </head>
 <body>
@@ -55,13 +176,13 @@
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3"/></symbol>
   </svg>
   <header class="app-header shell">
-    <div class="brand"><div class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div><div class="brand-name">Rianne's Rubik Cube Time</div><div class="brand-caption">Solve • Track • Improve</div></div></div>
+    <div class="brand"><div class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div><div class="brand-name">Rianne's Rubik Cube Time</div><div class="brand-caption">SOLVE ✦ GROW ✦ SHINE</div></div></div>
     <nav class="desktop-nav" aria-label="Main navigation"><button type="button" class="nav-link active" data-page="timer"><svg><use href="#i-clock"/></svg> Timer</button><button type="button" class="nav-link" data-page="progress"><svg><use href="#i-chart"/></svg> Progress</button><button type="button" class="nav-link" data-page="history"><svg><use href="#i-list"/></svg> History</button><button type="button" class="nav-link" data-page="settings"><svg><use href="#i-settings"/></svg> Settings</button></nav>
   </header>
   <main class="shell">
     <section class="view active" id="view-timer" aria-label="Rubik's Cube timer">
       <div class="offline-strip" id="offlineStrip" role="status" aria-live="polite"><span class="offline-light" id="offlineLight"></span><span id="offlineShort">Preparing offline access…</span></div>
-      <div class="page-heading"><div><div class="eyebrow">Your next personal best starts here</div><h1 class="page-title">Ready, set, <span style="color:var(--mint)">solve.</span></h1><p class="lede">Two fingers down. Wait for green. Release both to begin. Touch with two again to stop.</p></div></div>
+      <div class="page-heading"><div><div class="eyebrow">✦ Rianne’s speedcube era ✦</div><h1 class="page-title">Ready, set, <span style="color:var(--pink)">solve.</span></h1><p class="lede">Two fingers down. Wait for green. Release both to begin. Touch with two again to stop.</p></div></div>
       <div class="dashboard-grid">
         <article class="card timer-card">
           <div class="timer-top"><div class="timer-title">Speedcube Timer</div><div class="timer-top-actions"><div id="timerStatus" class="pill"><span class="dot"></span><span id="timerStatusText">Ready</span></div><button type="button" class="icon-btn expand-btn" id="focusOpen" title="Open full-screen timer" aria-label="Open full-screen timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div></div>
@@ -79,7 +200,7 @@
     <section class="view" id="view-history" aria-label="Solve history"><div class="page-heading"><div><div class="eyebrow">Every attempt matters</div><h1 class="page-title">Solve history</h1><p class="lede">Review previous solves, correct penalties, and add practice notes.</p></div><button type="button" class="btn primary" id="manualAddHistory"><svg><use href="#i-plus"/></svg> Add time</button></div><div class="history-bar"><div class="small muted" id="historyCount">0 solves</div><select class="select" id="historyFilter" aria-label="Filter solve history"><option value="all">All time</option><option value="today">Today</option><option value="week">Last 7 days</option><option value="month">Last 30 days</option></select></div><div id="historyList" class="history-list"></div><button type="button" class="btn load-more" id="loadMore" style="display:none">Show more solves</button></section>
     <section class="view" id="view-settings" aria-label="Settings and data backups"><div class="page-heading"><div><div class="eyebrow">Make it yours</div><h1 class="page-title">Settings & data</h1><p class="lede">Customize your practice and keep your records safe.</p></div></div><div class="settings-grid"><article class="card settings-card"><div class="card-title">Timer preferences</div><div class="setting-row"><div><div class="setting-name">Timer control</div><div class="setting-desc">Two-finger mode is best for iPhone and iPad. Classic mode allows a single tap or keyboard Space.</div></div><select id="settingControlMode" class="select" aria-label="Timer control mode"><option value="twoFinger">Two fingers</option><option value="classic">Classic / tap</option></select></div><div class="setting-row"><div><div class="setting-name">15-second inspection</div><div class="setting-desc">First two-finger hold and release begins inspection; repeat to start solving. +2 seconds after 15s; DNF after 17s.</div></div><input type="checkbox" class="switch" id="settingInspection" aria-label="Enable inspection"></div><div class="setting-row"><div><div class="setting-name">Hold to start (Classic only)</div><div class="setting-desc">Only for Classic mode: hold for 0.4 seconds before starting; two-finger mode always uses a 0.4-second hold.</div></div><input type="checkbox" class="switch" id="settingHold" aria-label="Hold to start"></div><div class="setting-row"><div><div class="setting-name">Timer sounds</div><div class="setting-desc">Play a short tone when a solve begins or ends.</div></div><input type="checkbox" class="switch" id="settingSound" aria-label="Timer sounds"></div><div class="setting-row"><div><div class="setting-name">Millisecond display</div><div class="setting-desc">Display three decimal places instead of two.</div></div><input type="checkbox" class="switch" id="settingMillis" aria-label="Millisecond display"></div><div class="setting-row"><div><div class="setting-name">Keep screen awake</div><div class="setting-desc">Attempt to prevent screen sleep while timing, if supported by your browser.</div></div><input type="checkbox" class="switch" id="settingWake" aria-label="Keep screen awake"></div><div class="setting-row"><div><div class="setting-name">Target time for <span id="goalPuzzleName">3×3</span></div><div class="setting-desc">Your goal is compared with your personal best.</div></div><input type="text" id="settingGoal" class="field" inputmode="decimal" placeholder="e.g. 00:30.00" style="width:126px" aria-label="Target solve time"></div><div class="action-row"><button type="button" id="saveGoal" class="btn primary">Save target</button></div></article>
       <article class="card settings-card"><div class="card-title">Backup, transfer & updates</div><p class="storage-message">Records stay on this device in this browser's local storage. GitHub does not store your times, and iPhone and iPad do not automatically sync. Export a backup to move your data or protect it before clearing Safari website data.</p><div class="action-row"><button type="button" class="btn primary" id="exportJSON"><svg><use href="#i-download"/></svg> Backup JSON</button><button type="button" class="btn" id="exportCSV">Export CSV</button></div><div class="setting-row"><div><div class="setting-name">Import a backup</div><div class="setting-desc">Merge keeps existing solves; replace discards them.</div></div><select id="importMode" class="select" aria-label="Import mode"><option value="merge">Merge</option><option value="replace">Replace</option></select></div><div class="action-row"><button type="button" class="btn" id="importJSON">Choose JSON backup</button><input type="file" id="importFile" accept=".json,application/json" hidden></div><div class="notice">Tip: On iPhone or iPad, open the GitHub Pages site in Safari and choose <b>Share → Add to Home Screen</b>. Always keep a separate JSON backup.</div><div class="setting-row"><div><div class="setting-name">Offline use on iPhone and iPad</div><div class="setting-desc">After one online launch, the app can reopen from its locally cached copy with no internet. Open the Home Screen app once while online to prepare its separate offline storage. Clearing website data or iOS removing cached data may require preparing again.</div></div><button type="button" class="btn" id="prepareOffline">Prepare offline</button></div><div id="offlineStatus" class="offline-info" role="status" aria-live="polite">Checking offline availability…</div><div class="notice">First-time offline limitation: GitHub Pages cannot deliver files to a device that has never downloaded them. Once prepared, the timer, history, charts, and records need no connection. The app still needs <b>index.html</b> and <b>sw.js</b> uploaded together to GitHub.</div><div class="setting-row"><div><div class="setting-name">Check for app updates</div><div class="setting-desc">Look for a newer index.html on your GitHub Pages website.</div></div><button type="button" class="btn" id="checkUpdate">Check</button></div><div id="updateMessage" class="small muted" aria-live="polite"></div><div class="setting-row"><div><div class="setting-name">Delete all solve records</div><div class="setting-desc">This action cannot be undone without a backup.</div></div><button type="button" class="btn danger" id="clearRecords">Erase</button></div></article></div></section>
-    <footer class="app-footer"><b>Rianne's Rubik Cube Time</b> <span aria-hidden="true">·</span> v<span id="footerVersion">1.0.2</span><div style="margin-top:5px">Made for practice, progress, and personal bests ✦</div></footer>
+    <footer class="app-footer"><b>Rianne's Rubik Cube Time</b> <span aria-hidden="true">·</span> v<span id="footerVersion">1.0.3</span><div style="margin-top:5px">Made for practice, progress, and personal bests ✦</div></footer>
   </main>
   <nav class="mobile-nav" aria-label="Mobile navigation"><button type="button" class="nav-link active" data-page="timer"><svg><use href="#i-clock"/></svg>Timer</button><button type="button" class="nav-link" data-page="progress"><svg><use href="#i-chart"/></svg>Progress</button><button type="button" class="nav-link" data-page="history"><svg><use href="#i-list"/></svg>History</button><button type="button" class="nav-link" data-page="settings"><svg><use href="#i-settings"/></svg>Settings</button></nav>
   <section id="focusOverlay" class="focus-overlay" role="dialog" aria-modal="true" aria-label="Full-screen practice timer" aria-hidden="true"><div class="focus-head"><div class="focus-brand"><span class="focus-cube">▦</span><span>RIANNE'S CUBE TIME</span></div><button type="button" id="focusClose" class="btn focus-close" aria-label="Exit full-screen timer">✕ <span>Exit full screen</span></button></div><div id="focusMount" class="focus-mount"></div><div class="focus-bottom"><span>🧩 <strong id="focusPuzzleLabel">3×3</strong> • Practice mode</span><span>Two fingers to start and stop · <kbd>Space</kbd> on keyboard</span></div></section>
@@ -87,12 +208,12 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 'use strict';
-/* Rianne's Rubik Cube Time — v1.0.2
+/* Rianne's Rubik Cube Time — v1.0.3
    Persistent storage key is intentionally NOT versioned so upgrades are cumulative.
    Schema v1: {schemaVersion, appVersion, settings, scrambles, solves}.
    Never change this key or reset user data in later releases; write migrations instead.
 */
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 const DATA_KEY = 'riannes-rubik-cube-time-data';
 const PUZZLES = ['2x2','3x3','4x4'];
 const defaults = { puzzle:'3x3', inspection:false, hold:false, controlMode:'twoFinger', sound:false, millis:false, wake:true, goals:{'2x2':null,'3x3':null,'4x4':null} };
@@ -246,12 +367,12 @@ function renderProgress(){const arr=records(),s=getStats(arr);$('statPB').textCo
   }
   $('insightList').innerHTML=insight.map(([h,p])=>`<div class="insight"><div class="headline">${escapeHtml(h)}</div><p>${escapeHtml(p)}</p></div>`).join('');
   const week=$('weekChart');const days=Array.from({length:7},(_,i)=>{const d=new Date(startOfDay(i-6));return {key:localDay(d.getTime()),label:new Intl.DateTimeFormat('en-PH',{weekday:'short'}).format(d),count:0};});for(const rec of arr){const item=days.find(x=>x.key===localDay(rec.occurredAt));if(item)item.count++;}const max=Math.max(1,...days.map(x=>x.count));week.innerHTML=days.map(x=>`<div class="day-wrap"><span class="day-count">${x.count||''}</span><div class="day-bar-track"><div class="day-bar" style="height:${x.count?Math.max(6,Math.round(x.count/max*100)):0}%"></div></div><span>${x.label}</span></div>`).join('');
-  const goal=state.settings.goals[state.settings.puzzle];const g=$('goalProgress');if(goal){const has=s.pb!==null;const reached=has && s.pb<=goal;const pct=has?Math.min(100,Math.round(goal/s.pb*100)):0;g.innerHTML=`<div style="font-size:30px;font-weight:850;color:var(--mint)">${escapeHtml(fmt(goal))}</div><div class="small muted" style="margin:4px 0 15px">Your target for ${escapeHtml(state.settings.puzzle)}</div><div style="height:10px;border-radius:999px;background:#2e3d57;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#9b8eff,#65f7bf);border-radius:inherit"></div></div><div class="small muted" style="margin-top:9px">${reached?'🎉 Target achieved!':has?`${pct}% of your target speed achieved`:'No solves recorded yet'}</div>`;}else g.innerHTML='<div class="muted" style="font-size:13px">No target set yet. Choose a time in Settings and watch your personal best get closer.</div>';
+  const goal=state.settings.goals[state.settings.puzzle];const g=$('goalProgress');if(goal){const has=s.pb!==null;const reached=has && s.pb<=goal;const pct=has?Math.min(100,Math.round(goal/s.pb*100)):0;g.innerHTML=`<div style="font-size:30px;font-weight:850;color:var(--mint)">${escapeHtml(fmt(goal))}</div><div class="small muted" style="margin:4px 0 15px">Your target for ${escapeHtml(state.settings.puzzle)}</div><div style="height:10px;border-radius:999px;background:#2e3d57;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#b297ff,#ff9ddb);border-radius:inherit"></div></div><div class="small muted" style="margin-top:9px">${reached?'🎉 Target achieved!':has?`${pct}% of your target speed achieved`:'No solves recorded yet'}</div>`;}else g.innerHTML='<div class="muted" style="font-size:13px">No target set yet. Choose a time in Settings and watch your personal best get closer.</div>';
   requestAnimationFrame(()=>drawTrend(valid.slice(-30).map(x=>x.time)));
 }
 function drawTrend(times){const wrap=$('chartWrap'),canvas=$('trendChart');if(currentPage!=='progress')return;if(times.length<2){canvas.style.display='none';let empty=wrap.querySelector('.chart-empty');if(!empty){empty=document.createElement('div');empty.className='chart-empty';wrap.appendChild(empty);}empty.textContent='Record at least two valid solves to see your time trend.';return;}const empty=wrap.querySelector('.chart-empty');if(empty)empty.remove();canvas.style.display='block';const w=wrap.clientWidth,h=wrap.clientHeight,ratio=Math.min(window.devicePixelRatio||1,3);if(w<40||h<40)return;canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);const p={left:63,right:16,top:22,bottom:32};const graphW=w-p.left-p.right,graphH=h-p.top-p.bottom;const min=Math.min(...times),max=Math.max(...times);const diff=Math.max(1000,max-min);const bottom=Math.max(0,min-diff*.18),top=max+diff*.19;const x=i=>p.left+i/(times.length-1)*graphW,y=v=>p.top+(top-v)/(top-bottom)*graphH;
-  ctx.font='11px -apple-system, system-ui, sans-serif';ctx.textAlign='right';ctx.lineWidth=1;for(let k=0;k<5;k++){const val=bottom+(top-bottom)*(4-k)/4,yy=p.top+k*graphH/4;ctx.strokeStyle='#2c3b55';ctx.beginPath();ctx.moveTo(p.left,yy);ctx.lineTo(w-p.right,yy);ctx.stroke();ctx.fillStyle='#a0afc8';ctx.fillText(fmt(val),p.left-9,yy+4);}ctx.fillStyle='#9babca';ctx.textAlign='center';ctx.fillText('Older',p.left+23,h-7);ctx.fillText('Latest',w-p.right-23,h-7);
-  const fill=ctx.createLinearGradient(0,p.top,0,h-p.bottom);fill.addColorStop(0,'rgba(101,247,191,.21)');fill.addColorStop(1,'rgba(101,247,191,0)');ctx.beginPath();times.forEach((t,i)=>i?ctx.lineTo(x(i),y(t)):ctx.moveTo(x(i),y(t)));ctx.lineTo(x(times.length-1),p.top+graphH);ctx.lineTo(x(0),p.top+graphH);ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.beginPath();times.forEach((t,i)=>i?ctx.lineTo(x(i),y(t)):ctx.moveTo(x(i),y(t)));ctx.strokeStyle='#65f7bf';ctx.lineWidth=2.6;ctx.lineJoin='round';ctx.stroke();times.forEach((t,i)=>{ctx.beginPath();ctx.arc(x(i),y(t),i===times.length-1?4:2.3,0,Math.PI*2);ctx.fillStyle=i===times.length-1?'#fff':'#65f7bf';ctx.fill();});
+  ctx.font='11px -apple-system, system-ui, sans-serif';ctx.textAlign='right';ctx.lineWidth=1;for(let k=0;k<5;k++){const val=bottom+(top-bottom)*(4-k)/4,yy=p.top+k*graphH/4;ctx.strokeStyle='#5d4671';ctx.beginPath();ctx.moveTo(p.left,yy);ctx.lineTo(w-p.right,yy);ctx.stroke();ctx.fillStyle='#ceb7db';ctx.fillText(fmt(val),p.left-9,yy+4);}ctx.fillStyle='#cdb9e0';ctx.textAlign='center';ctx.fillText('Older',p.left+23,h-7);ctx.fillText('Latest',w-p.right-23,h-7);
+  const fill=ctx.createLinearGradient(0,p.top,0,h-p.bottom);fill.addColorStop(0,'rgba(255,157,217,.24)');fill.addColorStop(1,'rgba(255,157,217,0)');ctx.beginPath();times.forEach((t,i)=>i?ctx.lineTo(x(i),y(t)):ctx.moveTo(x(i),y(t)));ctx.lineTo(x(times.length-1),p.top+graphH);ctx.lineTo(x(0),p.top+graphH);ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.beginPath();times.forEach((t,i)=>i?ctx.lineTo(x(i),y(t)):ctx.moveTo(x(i),y(t)));ctx.strokeStyle='#ffaddf';ctx.lineWidth=2.6;ctx.lineJoin='round';ctx.stroke();times.forEach((t,i)=>{ctx.beginPath();ctx.arc(x(i),y(t),i===times.length-1?4:2.3,0,Math.PI*2);ctx.fillStyle=i===times.length-1?'#fff':'#ffaddf';ctx.fill();});
 }
 function renderHistory(){const all=records().reverse(),now=Date.now();let arr=all;const filter=$('historyFilter').value;if(filter==='today')arr=all.filter(x=>x.occurredAt>=startOfDay());if(filter==='week')arr=all.filter(x=>x.occurredAt>=startOfDay(-6));if(filter==='month')arr=all.filter(x=>x.occurredAt>=startOfDay(-29));$('historyCount').textContent=`${arr.length} ${arr.length===1?'solve':'solves'} • ${state.settings.puzzle} cube`;
   if(!arr.length){$('historyList').innerHTML='<div class="empty-state"><div class="emoji">🧩</div><strong>No solves here yet</strong>Start the timer or manually add a solve to begin tracking progress.</div>';$('loadMore').style.display='none';return;}

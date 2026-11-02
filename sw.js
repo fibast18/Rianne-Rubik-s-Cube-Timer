@@ -1,10 +1,10 @@
-/* Rianne's Rubik Cube Time | Offline service worker | v1.0.2
+/* Rianne's Rubik Cube Time | Offline service worker | v1.0.3
    Upload this file BESIDE index.html to the SAME GitHub Pages directory.
    The app shell is a single self-contained HTML file with no CDN dependencies.
    Personal solves are stored separately using the existing browser localStorage.
 */
 const CACHE_PREFIX = 'riannes-cube-time-shell-';
-const CACHE_VERSION = 'v1.0.2';
+const CACHE_VERSION = 'v1.0.3';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
 const HOME_URL = new URL('./', self.registration.scope);
 const INDEX_URL = new URL('./index.html', self.registration.scope);
@@ -50,7 +50,7 @@ self.addEventListener('fetch', event => {
       }
       return live;
     } catch (error) {
-      return new Response('<!doctype html><meta name="viewport" content="width=device-width"><title>Offline copy unavailable</title><body style="font:16px sans-serif;padding:20px;background:#080d1b;color:white"><h2>Offline copy unavailable</h2><p>Connect to the internet once and open Rianne\'s Rubik Cube Time to prepare its offline copy.</p></body>',
+      return new Response('<!doctype html><meta name="viewport" content="width=device-width"><title>Offline copy unavailable</title><body style="font:16px sans-serif;padding:20px;background:#1b142e;color:white"><h2>Offline copy unavailable</h2><p>Connect to the internet once and open Rianne\'s Rubik Cube Time to prepare its offline copy.</p></body>',
         {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
     }
   })());

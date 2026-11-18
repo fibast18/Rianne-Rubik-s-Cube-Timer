@@ -1,0 +1,111 @@
+name: Rianne Cube Timer - CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: riannes-cube-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Validate & package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate app, offline worker and release compatibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check sw.js
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const vm = require('node:vm');
+
+          const files = [
+            'index.html', 'sw.js', 'manifest.webmanifest',
+            'apple-touch-icon.png', 'icon-192.png',
+            'icon-512.png', 'favicon.png'
+          ];
+          for (const file of files) {
+            assert(fs.existsSync(file), 'Missing release file: ' + file);
+            assert(fs.statSync(file).size > 0, 'Empty release file: ' + file);
+          }
+
+          const html = fs.readFileSync('index.html', 'utf8');
+          const worker = fs.readFileSync('sw.js', 'utf8');
+          const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest', 'utf8'));
+
+          const appVersion = html.match(/<meta\s+name=["']app-version["']\s+content=["']([0-9.]+)["']/i)?.[1];
+          const cacheVersion = worker.match(/const\s+CACHE_VERSION\s*=\s*["']v([0-9.]+)["']/)?.[1];
+          assert(appVersion, 'index.html must contain the app-version meta tag');
+          assert(cacheVersion, 'sw.js must declare CACHE_VERSION');
+          assert.equal(appVersion, cacheVersion, 'App version and offline cache version must match');
+
+          assert(html.includes('riannes-rubik-cube-time-data'),
+            'Do not remove or rename the existing saved-records storage key');
+          assert(html.includes('Developed by: Engr. Rico J. Pono'),
+            'The required footer must remain present');
+          assert.equal(manifest.name, "Rianne's Rubik Cube Timer",
+            'Keep the current Home Screen app name');
+          assert(manifest.icons?.length >= 2, 'The Home Screen icons are required');
+
+          const inlineScripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)];
+          assert(inlineScripts.length > 0, 'The timer application script is missing');
+          inlineScripts.forEach((match, i) =>
+            new vm.Script(match[1], { filename: 'index-inline-' + (i + 1) + '.js' })
+          );
+          console.log('PASS: Rianne Cube Timer v' + appVersion +
+            ', offline worker, icons, saved-record compatibility, and JavaScript');
+          NODE
+
+      - name: Package the production website
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cp index.html sw.js manifest.webmanifest \
+            apple-touch-icon.png icon-192.png icon-512.png favicon.png dist/
+          touch dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the validated site
+        id: deployment
+        uses: actions/deploy-pages@v4
